@@ -10,6 +10,11 @@ export class AppController {
   getHello(): string {
     return this.appService.getHello();
   }
+  @Get('/check-health')
+  @HttpCode(200)
+  checkHealth(): string {
+    return 'ok';
+  }
 
   @Post('crypto')
   getcryptoApi(@Body() subscriptionData: SubscriptionDto): Promise<object> {
