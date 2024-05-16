@@ -1,15 +1,28 @@
-import { Body, Controller, Get, HttpCode, Post } from '@nestjs/common';
+import { Body, Controller, Get, HttpCode, Post, Res } from '@nestjs/common';
 import { AppService } from './app.service';
 import { CallbackDto, SubscriptionDto } from './app.dto';
+import { Response } from 'express';
+import * as fs from 'fs';
+import * as path from 'path';
 
 @Controller('/api')
 export class AppController {
   constructor(private readonly appService: AppService) {}
 
-  @Get()
-  getHello(): string {
-    return this.appService.getHello();
+  @Get('/cryptoapisverifydomain')
+  verifyCryptoApi(@Res() res: Response) {
+    const filePath = path.join(__dirname, '../', 'cryptoapisverifydomain.txt');
+    const fileName = 'cryptoapisverifydomain.txt';
+    const fileStream = fs.createReadStream(filePath);
+
+    res.set({
+      'Content-Type': 'text/plain',
+      'Content-Disposition': `attachment; filename=${fileName}`,
+    });
+
+    fileStream.pipe(res);
   }
+
   @Get('/check-health')
   @HttpCode(200)
   checkHealth(): string {
