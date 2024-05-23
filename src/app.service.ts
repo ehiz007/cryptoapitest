@@ -12,8 +12,9 @@ export class AppService {
     // const sign = CryptoJS.enc.Base64.stringify(
     //   CryptoJS.HmacSHA256(timeStamp + requestMethod + endpoint + body, OK_ACCESS_SECRET),
     // );
+    const { blockchain, network, context } = subscriptionData;
     const response = await fetch(
-      `https://rest.cryptoapis.io/blockchain-events/bitcoin/testnet/subscriptions/address-coins-transactions-confirmed?context=${subscriptionData.context}`,
+      `https://rest.cryptoapis.io/blockchain-events/${blockchain}/${network}/subscriptions/address-coins-transactions-confirmed?context=${context}`,
       {
         method: 'POST',
         headers: {
