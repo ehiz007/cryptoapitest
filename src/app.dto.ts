@@ -45,6 +45,10 @@ export class CallbackDto {
 
 export class SubscriptionDto {
   @IsString()
+  blockchain: string;
+  @IsString()
+  network: string;
+  @IsString()
   context: string;
   @ValidateNested()
   data: {
