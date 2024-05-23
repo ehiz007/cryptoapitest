@@ -8,13 +8,17 @@ export class AppService {
   }
 
   async getCrypto(subscriptionData: SubscriptionDto): Promise<object> {
+    // 'https://rest.cryptoapis.io/blockchain-events/subscriptions/bc243c86-0902-4386-b30d-e6b30fa1f2aa?context=Dnar-Subscriptions',
+    // const sign = CryptoJS.enc.Base64.stringify(
+    //   CryptoJS.HmacSHA256(timeStamp + requestMethod + endpoint + body, OK_ACCESS_SECRET),
+    // );
     const response = await fetch(
-      'https://rest.cryptoapis.io/blockchain-events/subscriptions/bc243c86-0902-4386-b30d-e6b30fa1f2aa?context=Dnar-Subscriptions',
+      `https://rest.cryptoapis.io/blockchain-events/bitcoin/testnet/subscriptions/address-coins-transactions-confirmed?context=${subscriptionData.context}`,
       {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'X-API-Key': 'bed0044453631a2d2321478486e2984674e148ac',
+          'X-API-Key': process.env.ApiKey,
         },
         body: JSON.stringify({
           ...subscriptionData,
@@ -22,7 +26,6 @@ export class AppService {
       },
     );
     return response.json();
-    return subscriptionData;
   }
 
   async cryptoApiCallback(res: CallbackDto): Promise<object> {

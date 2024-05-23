@@ -33,6 +33,7 @@ export class AppController {
   getcryptoApi(@Body() subscriptionData: SubscriptionDto): Promise<object> {
     return this.appService.getCrypto(subscriptionData);
   }
+
   @Post('dnar-tx')
   @HttpCode(200)
   cryptoApiCallback(@Body() callbackData: CallbackDto): Promise<object> {

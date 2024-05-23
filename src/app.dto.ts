@@ -1,31 +1,24 @@
 import { Type } from 'class-transformer';
-import { IsBoolean, IsNumber, IsString, ValidateNested } from 'class-validator';
+import { IsString, ValidateNested } from 'class-validator';
 
 class Item {
   @IsString()
-  address: string;
-  @IsBoolean()
-  allowDuplicates?: boolean;
-  @IsString()
-  callbackSecretKey: string;
-  @IsString()
-  callbackUrl: string;
-  // @IsString()
   blockchain: string;
-  // @IsString()
+  @IsString()
   network: string;
-  confirmationsCount: number;
-  // @IsNumber()
-  targetConfirmations: number;
-  transactionId: string;
-  amount: number;
-  unit: string;
-  direction: string;
+  @IsString()
+  address: string;
   minedInBlock: {
     height: number;
     hash: string;
     timestamp: number;
   };
+  transactionId: string;
+  currentConfirmations: number;
+  targetConfirmations: number;
+  amount: number | string;
+  unit: string;
+  direction: string;
 }
 
 class Data {
@@ -53,7 +46,15 @@ export class CallbackDto {
 export class SubscriptionDto {
   @IsString()
   context: string;
-  @Type(() => Data)
   @ValidateNested()
-  data: Data;
+  data: {
+    item: {
+      address: string;
+      allowDuplicates?: boolean;
+      callbackSecretKey: string;
+      callbackUrl: string;
+      confirmationsCount: number;
+      receiveCallbackOn: number;
+    };
+  };
 }
