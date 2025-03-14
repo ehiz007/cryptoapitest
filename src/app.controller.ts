@@ -8,7 +8,7 @@ import * as path from 'path';
 @Controller('')
 export class AppController {
   constructor(private readonly appService: AppService) {}
-
+// The cryptoapi hits this callback url deployed on onrender. and returns a txt file with status code of 200.
   @Get('/cryptoapisverifydomain')
   verifyCryptoApi(@Res() res: Response) {
     const filePath = path.join(__dirname, '../', 'cryptoapisverifydomain.txt');
